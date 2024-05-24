@@ -1,0 +1,22 @@
+!!omap
+- manipulator: !!omap
+  - name: uofsc
+  - keypoints:
+    - name: joint1
+      friendly_name: joint1
+      ros_frame: uofsc_link1
+    - name: joint2
+      friendly_name: joint2
+      ros_frame: uofsc_link2
+    - name: joint3
+      friendly_name: joint3
+      ros_frame: uofsc_link3
+    - name: joint4
+      friendly_name: joint4
+      ros_frame: uofsc_link4
+    - name: joint5
+      friendly_name: joint5
+      ros_frame: uofsc_link5
+    - name: joint6
+      friendly_name: joint6
+      ros_frame: uofsc_link6
