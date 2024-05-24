@@ -2,3 +2,4 @@ analyze_results/*.png
 __pycache__/
 training_results/
 data/
+trained_output/

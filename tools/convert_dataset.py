@@ -31,8 +31,8 @@ object_setting = {
 camera_setting = {
 	"camera_settings": [
 		{
-			"id": "",
-			"name": "",
+			"id": "0",
+			"name": "camera_0",
 			"intrinsic_settings":
 			{
 				"fx": 320,
@@ -62,8 +62,8 @@ def points2ann(points):
     ann = {
 	"camera_data":
 	{
-		"location_worldframe": [],
-		"quaternion_xyzw_worldframe": []
+		"location_worldframe": [0, 0, 0],
+		"quaternion_xyzw_worldframe": [0, 0, 0, 1],
 	},
 	"objects": [
 		{
@@ -108,11 +108,11 @@ def points2ann(points):
     
 
 # save object setting into a json file
-with open(os.path.join(save_dir, "_object_setting.json"), 'w') as f:
+with open(os.path.join(save_dir, "_object_settings.json"), 'w') as f:
     json.dump(object_setting, f, indent=4)
 
 # save camera setting into a json file
-with open(os.path.join(save_dir, "_camera_setting.json"), 'w') as f:
+with open(os.path.join(save_dir, "_camera_settings.json"), 'w') as f:
     json.dump(camera_setting, f, indent=4)
 
 id = 0
