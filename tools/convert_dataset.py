@@ -72,32 +72,32 @@ def points2ann(points):
 			"keypoints": [
 				{
 					"name": "joint1",
-					"location": [],
+					"location": [1,1,1],
 					"projected_location": [ x1, y1 ]
 				},
 				{
 					"name": "joint2",
-					"location": [],
+					"location": [2,2,2],
 					"projected_location": [ x2, y2 ]
 				},
 				{
 					"name": "joint3",
-					"location": [],
+					"location": [3,3,3],
 					"projected_location": [ x3, y3 ]
 				},
                 {
                     "name": "joint4",
-                    "location": [],
+                    "location": [4,4,4],
                     "projected_location": [ x4, y4 ]
                 },
                 {
                     "name": "joint5",
-                    "location": [],
+                    "location": [5,5,5],
                     "projected_location": [ x5, y5 ]
                 },
                 {
                     "name": "joint6",
-                    "location": [],
+                    "location": [6,6,6],
                     "projected_location": [ x6, y6 ]
                 }
 			]

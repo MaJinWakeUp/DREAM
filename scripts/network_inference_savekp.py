@@ -8,6 +8,7 @@ from PIL import Image as PILImage
 import shutil
 import subprocess
 import sys
+import json
 
 import numpy as np
 from ruamel.yaml import YAML
@@ -145,6 +146,7 @@ def visualize_network_inference(args):
                 "frame": [],
             }
         )
+    kp_overlay_save_dir = os.path.join(args.output_dir, "kp_overlay_raw")
 
     if len(videos_to_make) == 0:
         print("No visualizations have been selected.")
@@ -196,7 +198,7 @@ def visualize_network_inference(args):
     dataset_meta_dict = dataset_to_viz[1]  # dictionary of camera, object files, etc.
 
     if dataset_file_dict_list:
-        print("Loading dataset...")
+
         # Downselect based on frame name
         if args.start_frame or args.end_frame:
             sample_names = [x["name"] for x in dataset_file_dict_list]
@@ -320,7 +322,6 @@ def visualize_network_inference(args):
                     )
 
     else:
-        print("Not an NDDS dataset.")
         # Probably a directory of images - fix this later to avoid code duplication
         dirlist = os.listdir(args.dataset_path)
         # dirlist.sort()
@@ -384,7 +385,7 @@ def visualize_network_inference(args):
             )
 
     # Iterate through inferred results
-    idx_this_frame = 1
+    idx_this_frame = 0
     print("Creating visualizations...")
     for (
         image_raw,
@@ -394,7 +395,7 @@ def visualize_network_inference(args):
         detected_kp_projs_net_input,
         gt_kp_projs_raw,
         gt_kp_projs_net_input,
-    ) in tqdm(sample_results):
+    ) in tqdm(sample_results):     
 
         show_gt_keypoints = (not args.no_ground_truth) and len(gt_kp_projs_raw) > 0
 
@@ -550,12 +551,22 @@ def visualize_network_inference(args):
                 os.path.join(video["frames_dir"], frame_output_filename)
             )
 
+        net_output_filename = str(idx_this_frame).zfill(6) + ".json"
+        # save belief maps and detected keypoints to json
+        save_dict = {
+            "detected_kp_projs_raw": detected_kp_projs_raw.tolist(),
+            "belief_maps": belief_maps.detach().cpu().numpy().tolist(),
+        }
+        if not os.path.exists(kp_overlay_save_dir):
+            os.makedirs(kp_overlay_save_dir)
+        with open(os.path.join(kp_overlay_save_dir, net_output_filename), "w") as f:
+            json.dump(save_dict, f, indent=4)
         idx_this_frame += 1
 
     # Call to ffmpeg
-    for video in videos_to_make:
-        video_from_frames(video["frames_dir"], video["output_path"], args.framerate)
-        shutil.rmtree(video["frames_dir"])
+    # for video in videos_to_make:
+    #     video_from_frames(video["frames_dir"], video["output_path"], args.framerate)
+    #     shutil.rmtree(video["frames_dir"])
 
 
 if __name__ == "__main__":

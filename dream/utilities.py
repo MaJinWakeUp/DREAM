@@ -119,7 +119,8 @@ def find_ndds_data_in_dir(
     data_filenames = [f for f in dirlist if f.endswith(data_full_ext)]
 
     # Sort candidate data files by name
-    data_filenames.sort()
+    # data_filenames.sort()
+    data_filenames = sorted(data_filenames, key=lambda x: int(x.split('.')[0]))
 
     data_names = [os.path.splitext(f)[0] for f in data_filenames if f[0].isdigit()]
 
